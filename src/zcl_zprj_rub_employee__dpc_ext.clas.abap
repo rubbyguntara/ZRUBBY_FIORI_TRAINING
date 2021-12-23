@@ -54,21 +54,18 @@ CLASS ZCL_ZPRJ_RUB_EMPLOYEE__DPC_EXT IMPLEMENTATION.
         COMMIT WORK AND WAIT.
         er_entity = CORRESPONDING #( ls_entry ).
       ELSE.
-        TRY.
-            DATA(message_container) = me->/iwbep/if_mgw_conv_srv_runtime~get_message_container( ).
+        DATA(message_container) = me->/iwbep/if_mgw_conv_srv_runtime~get_message_container( ).
 
-            message_container->add_message(
-            EXPORTING
-            iv_msg_type = 'E'
-            iv_msg_id = '/IWBEP/CM_OC1'
-            iv_msg_number = 45
-            iv_add_to_response_header = abap_true
-            ).
-            RAISE EXCEPTION TYPE /iwbep/cx_mgw_busi_exception
-              EXPORTING
-                message_container = message_container.
-          CATCH /iwbep/cx_mgw_base_exception INTO DATA(mgw_exception).
-        ENDTRY.
+        message_container->add_message(
+        EXPORTING
+        iv_msg_type = 'E'
+        iv_msg_id = '/IWBEP/CM_OC1'
+        iv_msg_number = 45
+        iv_add_to_response_header = abap_true
+        ).
+        RAISE EXCEPTION TYPE /iwbep/cx_mgw_busi_exception
+          EXPORTING
+            message_container = message_container.
       ENDIF.
     ENDIF.
   ENDMETHOD.
@@ -149,7 +146,8 @@ CLASS ZCL_ZPRJ_RUB_EMPLOYEE__DPC_EXT IMPLEMENTATION.
 **  CATCH /iwbep/cx_mgw_busi_exception.
 **  CATCH /iwbep/cx_mgw_tech_exception.
 **ENDTRY.
-    SELECT * FROM zta_emp_vac_rub INTO TABLE @DATA(vac_data).
+    SELECT * FROM zta_emp_vac_rub INTO TABLE @DATA(vac_data)
+      ORDER BY persno DESCENDING.
 
     et_entityset = CORRESPONDING #( vac_data ).
 

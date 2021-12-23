@@ -414,10 +414,10 @@ LOOP AT lt_filter_select_options INTO ls_filter.
           et_select_option = lr_VAC_TYPE ).
 
       LOOP AT lr_VAC_TYPE INTO ls_VAC_TYPE.
-        ls_selopt-sign = ls_VAC_TYPE-sign.
-        ls_selopt-option = ls_VAC_TYPE-option.
-        ls_selopt-low = ls_VAC_TYPE-low.
         ls_selopt-high = ls_VAC_TYPE-high.
+        ls_selopt-low = ls_VAC_TYPE-low.
+        ls_selopt-option = ls_VAC_TYPE-option.
+        ls_selopt-sign = ls_VAC_TYPE-sign.
         ls_selopt-shlpfield = 'VAC_TYPE'.
         ls_selopt-shlpname = 'ZSH_VACCINE_RUB'.
         APPEND ls_selopt TO lt_selopt.
@@ -431,10 +431,10 @@ LOOP AT lt_filter_select_options INTO ls_filter.
           et_select_option = lr_VAC_TYPE_TEXT ).
 
       LOOP AT lr_VAC_TYPE_TEXT INTO ls_VAC_TYPE_TEXT.
-        ls_selopt-sign = ls_VAC_TYPE_TEXT-sign.
-        ls_selopt-option = ls_VAC_TYPE_TEXT-option.
-        ls_selopt-low = ls_VAC_TYPE_TEXT-low.
         ls_selopt-high = ls_VAC_TYPE_TEXT-high.
+        ls_selopt-low = ls_VAC_TYPE_TEXT-low.
+        ls_selopt-option = ls_VAC_TYPE_TEXT-option.
+        ls_selopt-sign = ls_VAC_TYPE_TEXT-sign.
         ls_selopt-shlpfield = 'VAC_TYPE_TEXT'.
         ls_selopt-shlpname = 'ZSH_VACCINE_RUB'.
         APPEND ls_selopt TO lt_selopt.
@@ -629,10 +629,10 @@ DATA lt_selopt TYPE ddshselops.
 DATA ls_selopt LIKE LINE OF lt_selopt.
 DATA ls_filter TYPE /iwbep/s_mgw_select_option.
 DATA ls_filter_range TYPE /iwbep/s_cod_select_option.
-DATA lr_LOCATION_TEXT LIKE RANGE OF ls_converted_keys-location_text.
-DATA ls_LOCATION_TEXT LIKE LINE OF lr_LOCATION_TEXT.
 DATA lr_LOCATION_CODE LIKE RANGE OF ls_converted_keys-location_code.
 DATA ls_LOCATION_CODE LIKE LINE OF lr_LOCATION_CODE.
+DATA lr_LOCATION_TEXT LIKE RANGE OF ls_converted_keys-location_text.
+DATA ls_LOCATION_TEXT LIKE LINE OF lr_LOCATION_TEXT.
 DATA lt_result_list TYPE /iwbep/if_sb_gendpc_shlp_data=>tt_result_list.
 DATA lv_next TYPE i VALUE 1.
 DATA ls_entityset LIKE LINE OF et_entityset.
@@ -685,23 +685,6 @@ ENDIF.
 LOOP AT lt_filter_select_options INTO ls_filter.
 
   CASE ls_filter-property.
-    WHEN 'LOCATION_TEXT'.              " Equivalent to 'LocationText' property in the service
-      lo_filter->convert_select_option(
-        EXPORTING
-          is_select_option = ls_filter
-        IMPORTING
-          et_select_option = lr_LOCATION_TEXT ).
-
-      LOOP AT lr_LOCATION_TEXT INTO ls_LOCATION_TEXT.
-        ls_selopt-sign = ls_LOCATION_TEXT-sign.
-        ls_selopt-option = ls_LOCATION_TEXT-option.
-        ls_selopt-low = ls_LOCATION_TEXT-low.
-        ls_selopt-high = ls_LOCATION_TEXT-high.
-        ls_selopt-shlpfield = 'LOCATION_TEXT'.
-        ls_selopt-shlpname = 'ZSH_VAC_LOC_RUB'.
-        APPEND ls_selopt TO lt_selopt.
-        CLEAR ls_selopt.
-      ENDLOOP.
     WHEN 'LOCATION_CODE'.              " Equivalent to 'LocationCode' property in the service
       lo_filter->convert_select_option(
         EXPORTING
@@ -710,11 +693,28 @@ LOOP AT lt_filter_select_options INTO ls_filter.
           et_select_option = lr_LOCATION_CODE ).
 
       LOOP AT lr_LOCATION_CODE INTO ls_LOCATION_CODE.
-        ls_selopt-sign = ls_LOCATION_CODE-sign.
-        ls_selopt-option = ls_LOCATION_CODE-option.
-        ls_selopt-low = ls_LOCATION_CODE-low.
         ls_selopt-high = ls_LOCATION_CODE-high.
+        ls_selopt-low = ls_LOCATION_CODE-low.
+        ls_selopt-option = ls_LOCATION_CODE-option.
+        ls_selopt-sign = ls_LOCATION_CODE-sign.
         ls_selopt-shlpfield = 'LOCATION_CODE'.
+        ls_selopt-shlpname = 'ZSH_VAC_LOC_RUB'.
+        APPEND ls_selopt TO lt_selopt.
+        CLEAR ls_selopt.
+      ENDLOOP.
+    WHEN 'LOCATION_TEXT'.              " Equivalent to 'LocationText' property in the service
+      lo_filter->convert_select_option(
+        EXPORTING
+          is_select_option = ls_filter
+        IMPORTING
+          et_select_option = lr_LOCATION_TEXT ).
+
+      LOOP AT lr_LOCATION_TEXT INTO ls_LOCATION_TEXT.
+        ls_selopt-high = ls_LOCATION_TEXT-high.
+        ls_selopt-low = ls_LOCATION_TEXT-low.
+        ls_selopt-option = ls_LOCATION_TEXT-option.
+        ls_selopt-sign = ls_LOCATION_TEXT-sign.
+        ls_selopt-shlpfield = 'LOCATION_TEXT'.
         ls_selopt-shlpname = 'ZSH_VAC_LOC_RUB'.
         APPEND ls_selopt TO lt_selopt.
         CLEAR ls_selopt.
@@ -1010,10 +1010,10 @@ LOOP AT lt_filter_select_options INTO ls_filter.
           et_select_option = lr_BLOOD_TYPE ).
 
       LOOP AT lr_BLOOD_TYPE INTO ls_BLOOD_TYPE.
-        ls_selopt-sign = ls_BLOOD_TYPE-sign.
-        ls_selopt-option = ls_BLOOD_TYPE-option.
-        ls_selopt-low = ls_BLOOD_TYPE-low.
         ls_selopt-high = ls_BLOOD_TYPE-high.
+        ls_selopt-low = ls_BLOOD_TYPE-low.
+        ls_selopt-option = ls_BLOOD_TYPE-option.
+        ls_selopt-sign = ls_BLOOD_TYPE-sign.
         ls_selopt-shlpfield = 'BLOOD_TYPE'.
         ls_selopt-shlpname = 'ZSH_EMP_BLOOD_RUB'.
         APPEND ls_selopt TO lt_selopt.
@@ -1323,7 +1323,7 @@ lo_logger = /iwbep/if_mgw_conv_srv_runtime~get_logger( ).
   method /IWBEP/IF_MGW_APPL_SRV_RUNTIME~UPDATE_ENTITY.
 *&----------------------------------------------------------------------------------------------*
 *&  Include           /IWBEP/DPC_TEMP_UPD_ENTITY_BASE
-*&* This class has been generated on 12/20/2021 13:59:13 in client 100
+*&* This class has been generated on 12/22/2021 18:11:36 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -1467,7 +1467,7 @@ CASE lv_entityset_name.
   method /IWBEP/IF_MGW_APPL_SRV_RUNTIME~GET_ENTITYSET.
 *&----------------------------------------------------------------------------------------------*
 *&  Include           /IWBEP/DPC_TMP_ENTITYSET_BASE
-*&* This class has been generated on 12/20/2021 13:59:13 in client 100
+*&* This class has been generated on 12/22/2021 18:11:36 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -1625,7 +1625,7 @@ CASE lv_entityset_name.
   method /IWBEP/IF_MGW_APPL_SRV_RUNTIME~GET_ENTITY.
 *&-----------------------------------------------------------------------------------------------*
 *&  Include           /IWBEP/DPC_TEMP_GETENTITY_BASE
-*&* This class has been generated  on 12/20/2021 13:59:13 in client 100
+*&* This class has been generated  on 12/22/2021 18:11:36 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -1773,7 +1773,7 @@ CASE lv_entityset_name.
   method /IWBEP/IF_MGW_APPL_SRV_RUNTIME~DELETE_ENTITY.
 *&----------------------------------------------------------------------------------------------*
 *&  Include           /IWBEP/DPC_TEMP_DEL_ENTITY_BASE
-*&* This class has been generated on 12/20/2021 13:59:13 in client 100
+*&* This class has been generated on 12/22/2021 18:11:36 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -1857,7 +1857,7 @@ CASE lv_entityset_name.
   method /IWBEP/IF_MGW_APPL_SRV_RUNTIME~CREATE_ENTITY.
 *&----------------------------------------------------------------------------------------------*
 *&  Include           /IWBEP/DPC_TEMP_CRT_ENTITY_BASE
-*&* This class has been generated on 12/20/2021 13:59:13 in client 100
+*&* This class has been generated on 12/22/2021 18:11:36 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
